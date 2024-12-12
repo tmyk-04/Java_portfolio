@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>災害管理システム 避難所検索</title>
+	<link rel="stylesheet" href="CSS/style.css">
+	<script src="JS/script.js"></script>
+
+</head>
+
+<body>
+	<h1>災害管理システム 避難所検索</h1>
+	<section class="reference">
+		<h2>使用方法</h2>
+		<P> 入力された住所から、最も近い避難所を近い順に３件まで表示します。
+			<br>フォームに住所を入力し、災害種別にチェックを入れ、検索ボタンを押してください。
+		</P>
+	</section>
+	<section class="userForm">
+		<h2>入力フォーム</h2>
+		<form id="addressform" action="/DisasterRelief/Servlet" method="post">
+			<input id="address" type="text" name="address" size="50" required placeholder="例: 宮崎県宮崎市大工"><br>
+			<input id="sanitizedAddress" type="hidden" name="sanitizedAddress"><br>
+			<div class="disasterType">
+				<label><input type="checkbox" name="disaster" value="1">
+					洪水</label>
+				<label><input type="checkbox" name="disaster" value="2">
+					崖崩れ、土石流及び地滑り</label>
+				<label><input type="checkbox" name="disaster" value="3">
+					高潮</label>
+				<label><input type="checkbox" name="disaster" value="4">
+					地震</label>
+				<label><input type="checkbox" name="disaster" value="5">
+					津波</label>
+				<label><input type="checkbox" name="disaster" value="6">
+					大規模な火事</label>
+				<label><input type="checkbox" name="disaster" value="7">
+					内水氾濫</label>
+				<label><input type="checkbox" name="disaster" value="8">
+					火山現象</label>
+			</div>
+			<p>
+				<button type="reset">リセット</button>
+				<button type="submit">検索</button>
+			</p>
+		</form>
+	</section>
+</body>
+
+<script>
+	'use strict';
+
+	document.getElementById('addressform').onsubmit = function (event) {
+
+		try {
+			// フォーム送信を一時停止
+			//event.preventDefault();
+			const addressInput = document.getElementById('address').value;
+			const sanitizedValue = sanitize(addressInput);
+			document.getElementById('sanitizedAddress').value = sanitizedValue;
+			//this.submit();
+
+		} catch (error) {
+			console.error("フォーム送信時のエラー:", error);
+		}
+	};
+
+</script>
+
+</html>
